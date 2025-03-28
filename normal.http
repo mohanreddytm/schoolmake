@@ -1,0 +1,9 @@
+POST http://localhost:3004/addSchool
+Content-Type:application/json
+
+{
+    "name":"rahesh",
+    "address":"nandyal, ap",
+    "latitude":92.513,
+    "longitude":92.55
+}
