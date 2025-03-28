@@ -8,18 +8,18 @@ const port = 3004;
 app.use(express.json())
 
 app.get("/listSchools", (request , response) => {
-    const { latitude, longitude } = request.query;
+    let { latitude, longitude } = request.query;
 
     if (!latitude || !longitude) {
         return response.status(400).json({ error: 'Latitude and longitude are required' });
     }
 
-    latitude = parseFloat(latitude);
-    longitude = parseFloat(longitude);
+    let lat = parseFloat(latitude);
+    let lon = parseFloat(longitude);
 
     const query = 'SELECT *, (6371 * acos(cos(radians(?)) * cos(radians(latitude)) * cos(radians(longitude) - radians(?)) + sin(radians(?)) * sin(radians(latitude)))) AS distance FROM schools ORDER BY distance ASC';
     
-    db.query(query, [latitude, longitude, latitude], (err, results) => {
+    db.query(query, [lat, lon, lat], (err, results) => {
         if (err) {
             return response.status(500).json({ error: 'Database error', details: err });
         }
